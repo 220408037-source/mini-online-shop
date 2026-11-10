@@ -46,12 +46,13 @@ function useFetch(fetchFunction, parameter) {
 
     dispatch({ type: 'FETCH_START' })
 
-    const request =
-      parameter === undefined
-        ? fetchFunction(controller.signal)
-        : fetchFunction(parameter, controller.signal)
+  const request = Promise.resolve().then(() =>
+  parameter === undefined
+    ? fetchFunction(controller.signal)
+    : fetchFunction(parameter, controller.signal)
+)
 
-    request
+request
       .then((result) => {
         if (!controller.signal.aborted) {
           dispatch({
